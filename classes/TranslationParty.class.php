@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
   /**
    * Bare-bones PHP port of the core functionality from TranslationParty.com.
@@ -17,9 +17,12 @@
     private $languageTo;
     private $maxCycles;
     private $cycles = array();
-    
+
     /**
+     * Constructor function. Takes several keys from a configuration array and
+     * uses them to populate the private members of this class.
      * @access public
+     * @param array $config The configuration array
      */
     public function __construct($config) {
       // Store some private vars based on the user's config
@@ -39,7 +42,7 @@
      */
     public function mangle($text) {
       $this->cycles = array();
-      
+
       $previousText = '';
       for ($i = 0; $i < $this->maxCycles; $i++) {
         // Run a single translation cycle
@@ -47,14 +50,14 @@
 
         // If this cycle produced the same result as the last one, we're done
         if ($text == $previousText) break;
-        
+
         $previousText = $text;
         $this->cycles[] = $text;
       }
-      
+
       return $text;
     }
-    
+
     /**
      * Returns an array containing every intermediate corruption that was
      * encountered during the most recent mangle() call.
@@ -105,5 +108,5 @@
       return html_entity_decode($outText, ENT_QUOTES, 'UTF-8');
     }
   }
-  
+
 ?>

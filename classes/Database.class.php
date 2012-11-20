@@ -45,7 +45,7 @@
     public function db_connect($host, $user, $pass, $db) {
       self::$dbh = new PDO("mysql:host={$host};dbname={$db}", $user, $pass);
       self::$sth = NULL;
-      
+
       self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       self::$dbh->exec('SET CHARACTER SET "' . self::CHARSET . '"');
     }
@@ -83,11 +83,11 @@
         $params = (array) $params;  //make sure objects become assoc. arrays
         self::$sth = self::$dbh->prepare($sql);
         self::$sth->execute($params);
-      
+
       } else {
         self::$sth = self::$dbh->query($sql);
       }
-      
+
       return self::$sth->rowCount();
     }
 
