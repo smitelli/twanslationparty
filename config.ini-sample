@@ -1,0 +1,37 @@
+[twitter]
+; To generate these:
+; 1. Visit https://dev.twitter.com/apps/new and log in if needed.
+; 2. Fill in the whole form, leave "Callback URL" empty. Make sure the access
+; level is "Read and Write."
+; 3. Copy "Consumer key" and "Consumer secret" values.
+; 4. Create a new access token (if you don't have one)
+; 5. Copy "Access token" and "Access token secret" values.
+consumer_key        = "FILL ME IN"
+consumer_secret     = "FILL ME IN"
+access_token        = "FILL ME IN"
+access_token_secret = "FILL ME IN"
+
+[translation]
+; How many times to go from the "from" language to the "to" language and back
+cycles = 2
+
+; Language of the source text, and the final output (example "en")
+language_from = "en"
+
+; Intermediate language to translate to (example "ja")
+language_to = "ja"
+
+[mysql]
+; The hostname/IP of the MySQL server
+server = "127.0.0.1"
+
+; Name of an existing twitstash database to use
+database = "twitstash"
+
+; Database user name and password
+username = "FILL ME IN"
+password = "FILL ME IN"
+
+; Name of the table where this instance should store its state data. Don't use
+; backticks, etc. without escaping them. Actually, just don't use them at all.
+table = "twanslationparty"

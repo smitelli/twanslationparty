@@ -13,11 +13,20 @@
     const TRANSLATE_URL    = 'http://api.microsofttranslator.com/V2/Http.svc/Translate';
     const TRANSLATE_APP_ID = '40C35AE3F9234C5EEBBD79A13602FD6D1DD0D4C9';  //hello GitHub!
 
-    public $languageFrom = 'en';  //default language for text input and output
-    public $languageTo   = 'ja';  //intermediate language to translate into
-    public $maxCycles    = 50;    //maximum number of translation cycles to try
-    
+    private $languageFrom;
+    private $languageTo;
+    private $maxCycles;
     private $cycles = array();
+    
+    /**
+     * @access public
+     */
+    public function __construct($config) {
+      // Store some private vars based on the user's config
+      $this->languageFrom = $config['language_from'];
+      $this->languageTo   = $config['language_to'];
+      $this->maxCycles    = $config['cycles'];
+    }
 
     /**
      * This method corrupts an input string into a bastardized pseudo-English
