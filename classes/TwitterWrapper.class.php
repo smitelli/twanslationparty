@@ -1,8 +1,8 @@
 <?php
 
   /**
-   * Twitter Wrapper Class. Performs a dead-simple interface to send out a
-   * tweet given a set of OAuth keys.
+   * Twitter Wrapper Class. Performs a dead-simple interface to communicate with
+   * the Twitter API given a set of OAuth keys.
    * @author Scott Smitelli
    * @package twanslationparty
    */
