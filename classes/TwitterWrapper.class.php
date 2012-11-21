@@ -94,7 +94,7 @@
      * the front of the string so "in_reply_to_status_id" is not rejected.
      * @access public
      * @param string $oldText The text before mangling, used to find features
-     * @param string $newText The mangled text. A fixed version of is returned.
+     * @param string $newText Mangled text. A repaired copy of this is returned.
      * @return string Basically $newText, with original features reconstructed.
      */
     public static function salvage($oldText, $newText) {
