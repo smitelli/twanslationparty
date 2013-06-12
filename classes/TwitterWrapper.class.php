@@ -27,6 +27,9 @@
       $this->consumer_secret     = $config['consumer_secret'];
       $this->access_token        = $config['access_token'];
       $this->access_token_secret = $config['access_token_secret'];
+
+      // Set up the OAuth library to talk to Twitter
+      $this->twitter = new TwitterOAuth($this->consumer_key, $this->consumer_secret, $this->access_token, $this->access_token_secret);
     }
 
     /**
@@ -50,8 +53,7 @@
       }
 
       // Make the request and read the API response
-      $twitter = new TwitterOAuth($this->consumer_key, $this->consumer_secret, $this->access_token, $this->access_token_secret);
-      $response = $twitter->post('http://api.twitter.com/1/statuses/update.json', $request);
+      $response = $this->twitter->post('http://api.twitter.com/1.1/statuses/update.json', $request);
 
       if (empty($response)) {
         // Response was blank
@@ -79,8 +81,7 @@
      */
     public function deleteTweet($id) {
       // Make the request and read the API response
-      $twitter = new TwitterOAuth($this->consumer_key, $this->consumer_secret, $this->access_token, $this->access_token_secret);
-      $response = $twitter->post("https://api.twitter.com/1.1/statuses/destroy/{$id}.json");
+      $response = $this->twitter->post("https://api.twitter.com/1.1/statuses/destroy/{$id}.json");
       return isset($response->id_str);
     }
 
