@@ -47,9 +47,7 @@ that database to store state.
     and MySQL authentication in there. Remember to set the table name to match
     the query from step 3.
 
-6.  `chmod a+x twanslationparty.sh`
-
-7.  `./twanslationparty.sh`
+6.  `./twanslationparty.sh`
 
 Any **new** tweets that are present in the twitstash database will be mangled by
 the translation API, then reposted to the configured Twitter account. Each tweet
