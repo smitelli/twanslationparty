@@ -53,7 +53,7 @@
       }
 
       // Make the request and read the API response
-      $response = $this->twitter->post('http://api.twitter.com/1.1/statuses/update.json', $request);
+      $response = $this->twitter->post('https://api.twitter.com/1.1/statuses/update.json', $request);
 
       if (empty($response)) {
         // Response was blank
