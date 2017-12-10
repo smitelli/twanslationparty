@@ -21,7 +21,7 @@ Additionally, a live [twitstash](http://github.com/smitelli/twitstash) database
 needs to exist on your server. twanslationparty will add an additional table to
 that database to store state.
 
-###To install:
+### To install:
 
 1.  Set up [twitstash](http://github.com/smitelli/twitstash) and run it at least
     once to "prime" the database.
