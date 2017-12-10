@@ -24,8 +24,8 @@
     }
 
     /**
-     * Queries the database for the oldest tweet that is 1) not a retweet, 2) is
-     * not deleted, and 3) has not yet been translated. Returns the entire
+     * Queries the database for the oldest tweet that is 1) not a reply/retweet,
+     * 2) is not deleted, and 3) has not yet been translated. Returns the entire
      * twitstash object row, or FALSE if there are no eligible tweets
      * @access public
      * @return object The twitstash row of the next tweet to translate, or FALSE
@@ -45,11 +45,11 @@
     }
 
     /**
-     * Queries the database for the oldest tweet that is 1) not a retweet, 2)
-     * **HAS** been deleted, and 3) still has a `translated_id` value. This
-     * means that the tweet was freshly deleted from the source, but still
-     * exists on the destination account. It is therefore eligible for deletion
-     * via the Twitter API.
+     * Queries the database for the oldest tweet that is 1) **HAS** been
+     * deleted, and 2) still has a `translated_id` value. This means that the
+     * tweet was freshly deleted from the source, but still exists on the
+     * destination account. It is therefore eligible for deletion via the
+     * Twitter API.
      * @access public
      * @return string The ID string of the next tweet to operate on, or FALSE
      */
@@ -59,7 +59,6 @@
         FROM `tweets` LEFT JOIN `{$this->tableName}` ON `tweets`.`id` = `{$this->tableName}`.`original_id`
         WHERE
           `{$this->tableName}`.`translated_id` IS NOT NULL
-          AND `tweets`.`rt_id` = 0
           AND `tweets`.`deleted` IS NOT NULL
         ORDER BY `tweets`.`id` ASC LIMIT 1
       ");
