@@ -9,10 +9,7 @@
    */
 
   class TranslationParty {
-    // If these change, translateText() will likely need to be updated too
-    const TRANSLATE_URL    = 'http://api.microsofttranslator.com/V2/Http.svc/Translate';
-    const TRANSLATE_APP_ID = '40C35AE3F9234C5EEBBD79A13602FD6D1DD0D4C9';  //hello GitHub!
-
+    private $apiKey;
     private $languageFrom;
     private $languageTo;
     private $maxCycles;
@@ -26,6 +23,7 @@
      */
     public function __construct($config) {
       // Store some private vars based on the user's config
+      $this->apiKey       = $config['api_key'];
       $this->languageFrom = $config['language_from'];
       $this->languageTo   = $config['language_to'];
       $this->maxCycles    = $config['cycles'];
@@ -93,17 +91,24 @@
      */
     private function translateText($inText, $from, $to) {
       // See http://msdn.microsoft.com/en-us/library/ff512421.aspx for docs
-      $url = self::TRANSLATE_URL . '?' . http_build_query(array(
-        'appId'       => self::TRANSLATE_APP_ID,
+      $url = 'http://api.microsofttranslator.com/V2/Http.svc/Translate?' . http_build_query(array(
         'contentType' => 'text/plain',
         'text'        => $inText,
         'from'        => $from,
         'to'          => $to
       ));
 
-      // Load the XML, extract the data from it
+      // Perform an authenticated GET request to the Microsoft Translator API
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Ocp-Apim-Subscription-Key: {$this->apiKey}"
+      ));
+      $responseBody = curl_exec($ch);
+
+      // Parse the XML, extract the data from it
       $domDoc = new DOMDocument();
-      $domDoc->load($url);
+      $domDoc->loadXML($responseBody);
       $outText = $domDoc->getElementsByTagName('string')->item(0)->nodeValue;
       return html_entity_decode($outText, ENT_QUOTES, 'UTF-8');
     }

@@ -12,6 +12,13 @@ access_token        = "FILL ME IN"
 access_token_secret = "FILL ME IN"
 
 [translation]
+; An API/Subscription Key for the Translator Text API on Microsoft Azure.
+; I would write a set of instructions on how to register an account and generate
+; this, but it was a royal pain in the ass and odds are when somebody needs to
+; do it again in four years the whole process will be completely different
+; anyway.
+api_key = "FILL ME IN"
+
 ; How many times to go from the "from" language to the "to" language and back
 cycles = 2
 
