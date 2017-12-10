@@ -43,9 +43,13 @@
 
     try {
       // Try to send this tweet
-      echo "Sending [{$tweet->text}]... ";
+      echo "Sending [{$tweet->text}]...";
       $newID = $twitter->sendTweet($tweet);
-      echo "got {$newID}!\n";
+      if ($newID) {
+        echo " got {$newID}!\n";
+      } else {
+        echo " warning, giving up!\n";
+      }
 
     } catch (TwitterException $e) {
       // Error sending the tweet; shut the whole script down for safety

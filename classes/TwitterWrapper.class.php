@@ -60,14 +60,26 @@
         throw new TwitterException("Could not contact Twitter API.");
       }
 
+      // HACK: In some cases (I believe if a t.co URL is mangled too badly) the
+      // Twitter API will reject a tweet with an undocumented code 190. This
+      // seems to be a permanent error with no simple workaround, so give up.
+      if (isset($response->errors[0]->code) && $response->errors[0]->code == 190) {
+        return NULL;
+      }
+
       if (isset($response->error)) {
         // Response had an error indication
-        throw new TwitterException("Twitter says: {$response->error}");
+        throw new TwitterException("Twitter had an error: {$response->error}");
+
+      } else if (isset($response->errors)) {
+        // Response had an error indication
+        $details = print_r($response->errors, TRUE);
+        throw new TwitterException("Twitter had error(s): {$details}");
 
       } else if (!isset($response->created_at)) {
         // Response lacked any indication that the tweet was created
         $details = print_r($response, TRUE);
-        throw new TwitterException("Could not create tweet. {$details}");
+        throw new TwitterException("Could not create tweet: {$details}");
       }
 
       return $response->id_str;
