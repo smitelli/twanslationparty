@@ -36,6 +36,7 @@
         FROM `tweets` LEFT JOIN `{$this->tableName}` ON `tweets`.`id` = `{$this->tableName}`.`original_id`
         WHERE
           `{$this->tableName}`.`original_id` IS NULL
+          AND `tweets`.`reply_id` = 0
           AND `tweets`.`rt_id` = 0
           AND `tweets`.`deleted` IS NULL
         ORDER BY `tweets`.`id` ASC LIMIT 1
