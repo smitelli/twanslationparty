@@ -8,7 +8,7 @@
    */
 
   class TwitterWrapper {
-    const TWEET_MAX_LEN = 140;
+    const TWEET_MAX_LEN = 280;
 
     private $consumer_key;
     private $consumer_secret;
@@ -66,7 +66,8 @@
 
       } else if (!isset($response->created_at)) {
         // Response lacked any indication that the tweet was created
-        throw new TwitterException("Could not create tweet.");
+        $details = print_r($response, TRUE)
+        throw new TwitterException("Could not create tweet. {$details}");
       }
 
       return $response->id_str;
