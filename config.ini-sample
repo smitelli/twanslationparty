@@ -22,13 +22,15 @@ language_from = "en"
 language_to = "ja"
 
 [mysql]
-; The hostname/IP of the MySQL server
+; The hostname (and optionally, port) of the MySQL server.
+; If socket is a string (not FALSE), server is ignored.
 server = "127.0.0.1"
+socket = ""
 
 ; Name of an existing twitstash database to use
 database = "twitstash"
 
-; Database user name and password
+; User name and password
 username = "FILL ME IN"
 password = "FILL ME IN"
 

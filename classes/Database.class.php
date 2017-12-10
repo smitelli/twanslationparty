@@ -9,7 +9,7 @@
    */
 
   class Database {
-    const CHARSET = 'UTF8';
+    const CHARSET = 'utf8mb4';
     private static $cfg = NULL;
     private static $dbh = NULL;
     private static $sth = NULL;
@@ -25,7 +25,7 @@
         try {
           // Haven't connected yet, try to do so
           self::$cfg = (object) $config;
-          self::db_connect(self::$cfg->server, self::$cfg->username, self::$cfg->password, self::$cfg->database);
+          self::db_connect(self::$cfg->server, self::$cfg->socket, self::$cfg->username, self::$cfg->password, self::$cfg->database);
 
         } catch (PDOException $e) {
           // We need to catch the PDO exception, as its error message will contain the MySQL login information.
@@ -38,16 +38,22 @@
      * Opens a new connection to the database.
      * @access public
      * @param string $host The server to connect to
+     * @param string $sock The Unix socket to connect to. If set, ignore $host.
      * @param string $user The user name to authenticate with
      * @param string $pass The password to authenticate with
      * @param string $db The database to use
      */
-    public function db_connect($host, $user, $pass, $db) {
-      self::$dbh = new PDO("mysql:host={$host};dbname={$db}", $user, $pass);
-      self::$sth = NULL;
+    public function db_connect($host, $sock, $user, $pass, $db) {
+      if ($sock) {
+        // Connecting with a Unix socket
+        self::$dbh = new PDO("mysql:unix_socket={$sock};dbname={$db};charset=utf8mb4", $user, $pass);
+      } else {
+        // Connecting with TCP/IP on the default port
+        self::$dbh = new PDO("mysql:host={$host};dbname={$db};charset=utf8mb4", $user, $pass);
+      }
 
       self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      self::$dbh->exec('SET CHARACTER SET "' . self::CHARSET . '"');
+      self::$sth = NULL;
     }
 
     /**
