@@ -66,7 +66,7 @@
 
       } else if (!isset($response->created_at)) {
         // Response lacked any indication that the tweet was created
-        $details = print_r($response, TRUE)
+        $details = print_r($response, TRUE);
         throw new TwitterException("Could not create tweet. {$details}");
       }
 
