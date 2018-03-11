@@ -17,14 +17,14 @@ installed:
 *   `pdo` - Provides a database interface
 *   `pdo-mysql` - PDO driver for MySQL
 
-Additionally, a live [twitstash](http://github.com/smitelli/twitstash) database
+Additionally, a live [twitstash](https://github.com/smitelli/twitstash) database
 needs to exist on your server. twanslationparty will add an additional table to
 that database to store state.
 
 ### To install:
 
-1.  Set up [twitstash](http://github.com/smitelli/twitstash) and run it at least
-    once to "prime" the database.
+1.  Set up [twitstash](https://github.com/smitelli/twitstash) and run it at
+    least once to "prime" the database.
 
 2.  `git clone --recursive https://github.com/smitelli/twanslationparty.git &&
     cd twanslationparty`

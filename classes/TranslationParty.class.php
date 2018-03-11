@@ -90,8 +90,8 @@
      * @return string The translated text
      */
     private function translateText($inText, $from, $to) {
-      // See http://msdn.microsoft.com/en-us/library/ff512421.aspx for docs
-      $url = 'http://api.microsofttranslator.com/V2/Http.svc/Translate?' . http_build_query(array(
+      // See https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstarts/php for docs
+      $url = 'https://api.microsofttranslator.com/V2/Http.svc/Translate?' . http_build_query(array(
         'contentType' => 'text/plain',
         'text'        => $inText,
         'from'        => $from,
