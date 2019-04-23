@@ -20,7 +20,7 @@ access_token_secret = "FILL ME IN"
 api_key = "FILL ME IN"
 
 ; How many times to go from the "from" language to the "to" language and back
-cycles = 2
+cycles = 3
 
 ; Language of the source text, and the final output (example "en")
 language_from = "en"

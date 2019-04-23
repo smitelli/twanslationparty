@@ -82,7 +82,7 @@
 
     /**
      * Translates a portion of text from the language specified by $from into
-     * the language specified by $to. Uses the Microsoft Translator V2 API.
+     * the language specified by $to. Uses the Microsoft Translator V3 API.
      * @access private
      * @param string $inText The text to translate
      * @param string $from Language code to translate from (ex: 'en')
@@ -90,27 +90,34 @@
      * @return string The translated text
      */
     private function translateText($inText, $from, $to) {
-      // See https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstarts/php for docs
-      $url = 'https://api.microsofttranslator.com/V2/Http.svc/Translate?' . http_build_query(array(
-        'contentType' => 'text/plain',
-        'text'        => $inText,
+      // See https://docs.microsoft.com/en-us/azure/cognitive-services/Translator/quickstart-php-translate
+      $url = 'https://api.cognitive.microsofttranslator.com/translate?' . http_build_query(array(
+        'api-version' => '3.0',
         'from'        => $from,
         'to'          => $to
       ));
 
-      // Perform an authenticated GET request to the Microsoft Translator API
+      $requestData = array(
+        array('Text' => $inText)
+      );
+      $requestBody = json_encode($requestData);
+
+      // Perform an authenticated POST request to the Microsoft Translator API
       $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
       curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Ocp-Apim-Subscription-Key: {$this->apiKey}"
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($requestBody),
+        'Ocp-Apim-Subscription-Key: ' . $this->apiKey
       ));
       $responseBody = curl_exec($ch);
+      curl_close($ch);
 
-      // Parse the XML, extract the data from it
-      $domDoc = new DOMDocument();
-      $domDoc->loadXML($responseBody);
-      $outText = $domDoc->getElementsByTagName('string')->item(0)->nodeValue;
-      return html_entity_decode($outText, ENT_QUOTES, 'UTF-8');
+      // Parse the JSON, extract the data from it
+      $responseData = json_decode($responseBody);
+
+      return $responseData[0]->translations[0]->text;
     }
   }
 
