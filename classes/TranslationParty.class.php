@@ -47,7 +47,7 @@
         $text = $this->translateCycle($text);
 
         // If this cycle produced the same result as the last one, we're done
-        if ($text == $previousText) break;
+        if ($text === NULL || $text == $previousText) break;
 
         $previousText = $text;
         $this->cycles[] = $text;
@@ -76,7 +76,11 @@
     private function translateCycle($text) {
       // Translate to the 'to' language and then back to the 'from' language
       $text = $this->translateText($text, $this->languageFrom, $this->languageTo);
+      if ($text === NULL) return NULL;
+
       $text = $this->translateText($text, $this->languageTo, $this->languageFrom);
+      if ($text === NULL) return NULL;
+
       return $text;
     }
 
