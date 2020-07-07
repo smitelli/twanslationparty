@@ -38,8 +38,13 @@
   while ($tweet = $database->getNextTweet()) {
     // Mangle the text for a single tweet
     $oldText = $tweet->text;
-    $tweet->text = $trparty->mangle($tweet->text);
-    $tweet->text = $twitter::salvage($oldText, $tweet->text);
+    $mangledText = $trparty->mangle($tweet->text);
+
+    if ($mangled_text === NULL) {
+      die("Twanslation failed!\n\n");
+    }
+
+    $tweet->text = $twitter::salvage($oldText, $mangledText);
 
     try {
       // Try to send this tweet

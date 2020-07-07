@@ -117,6 +117,10 @@
       // Parse the JSON, extract the data from it
       $responseData = json_decode($responseBody);
 
+      if (isset($responseData->error)) {
+        return NULL;
+      }
+
       return $responseData[0]->translations[0]->text;
     }
   }

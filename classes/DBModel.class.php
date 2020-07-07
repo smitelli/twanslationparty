@@ -26,7 +26,8 @@
     /**
      * Queries the database for the oldest tweet that is 1) not a reply/retweet,
      * 2) is not deleted, and 3) has not yet been translated. Returns the entire
-     * twitstash object row, or FALSE if there are no eligible tweets
+     * twitstash object row, or FALSE if there are no eligible tweets. Enforces
+     * a hard max-age of 6 hours to prevent insanity.
      * @access public
      * @return object The twitstash row of the next tweet to translate, or FALSE
      */
@@ -36,6 +37,7 @@
         FROM `tweets` LEFT JOIN `{$this->tableName}` ON `tweets`.`id` = `{$this->tableName}`.`original_id`
         WHERE
           `{$this->tableName}`.`original_id` IS NULL
+          AND `tweets`.`created_at` > NOW() - INTERVAL 6 HOUR
           AND `tweets`.`reply_id` = 0
           AND `tweets`.`rt_id` = 0
           AND `tweets`.`deleted` IS NULL
