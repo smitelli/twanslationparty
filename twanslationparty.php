@@ -40,7 +40,7 @@
     $oldText = $tweet->text;
     $mangledText = $trparty->mangle($tweet->text);
 
-    if ($mangled_text === NULL) {
+    if ($mangledText === NULL) {
       die("Twanslation failed!\n\n");
     }
 
